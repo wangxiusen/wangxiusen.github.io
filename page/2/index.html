@@ -324,6 +324,167 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="wangsen.website/posts/25894/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王森">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder森">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/posts/25894/" itemprop="url">
+                  使用DZNEmptyDataSet时DZNEmptyDataSetView自动上移
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T14:56:41+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/25894/" class="leancloud_visitors" data-flag-title="使用DZNEmptyDataSet时DZNEmptyDataSetView自动上移">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用DZNEmptyDataSet遇到的一个问题</p>
+<blockquote>
+<p>今天在使用DZNEmptyDataSet遇到了一个问题，就是我用MJRefresh 后DZNEmptyDataSet View的整个背景尺寸不对。<br><br>ps: DZNEmptyDataSet是一个相当不错设置空白页面的轮子非常 好使 。</p>
+</blockquote>
+<p>无论是用自定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView</div></pre></td></tr></table></figure>
+<p>还是直接用 DZNEmptyDataSet 推荐的方式直接设置都是有问题的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView;</div><div class="line">- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView</div><div class="line">- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state</div></pre></td></tr></table></figure>
+<blockquote>
+<p>看看问题的具体表现吧</p>
+</blockquote>
+<p><img src="http://art21.photozou.jp/pub/534/3167534/photo/249087175_624.v1499234910.png" alt="正常的图片"></p>
+<blockquote>
+<p>下边这个就是 有问题了，没数据后自动上移了 </p>
+</blockquote>
+<p><img src="http://art5.photozou.jp/pub/534/3167534/photo/249087171_624.v1499234903.png" alt="非正常图片"></p>
+<p>简单的说问题是：刷新后DZNEmptyDataSetView 还会向上偏移一段距离！<br><br>尝试各种刷新都没有用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[self.tableView reloadEmptyDataSet];  </div><div class="line">[self.tableView reloadData];</div></pre></td></tr></table></figure>
+<p>看了下视图的层次关系<br><br><img src="http://art5.photozou.jp/pub/534/3167534/photo/249087178_624.v1499234916.jpg" alt="层次关系图"><br>可以看出了DZNEmptyDataSetView上移了54，然后我一搜 54 ，发现54出现地方并不多，结合刷新猜测应该就是它啦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const CGFloat MJRefreshHeaderHeight = 54.0;</div></pre></td></tr></table></figure>
+<p>所以推测，DZNEmptyDataSetView是根据正在刷新的过程中给其定布局的。然而我们需要阻止它或延后它。</p>
+<blockquote>
+<p>此处我是想着在这之后直接处理它,改变它的 origin。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for (UIView *subView in self.tableView.subviews) &#123;</div><div class="line">if ([NSStringFromClass([subView class]) isEqualToString:@&quot;DZNEmptyDataSetView&quot;])&#123;</div><div class="line">if (subView.frame.origin.y == 0) return;</div><div class="line">subView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在刷新后这样处理，方法有点死，但是相对来说比较直接的。</p>
+</blockquote>
+<p>从 github 上看到的方法如下，貌似是目前使用最合理的吧，有其他方法欢迎告知。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView &#123;</div><div class="line">scrollView.contentOffset = CGPointZero;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="wangsen.website/posts/59559/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -363,7 +524,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T11:09:57+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T12:09:57+08:00">
                 2017-05-18
               </time>
             
@@ -572,7 +733,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T14:52:14+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:52:14+08:00">
                 2017-05-17
               </time>
             
@@ -730,7 +891,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-15T16:28:25+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-15T17:28:25+08:00">
                 2017-05-15
               </time>
             
@@ -867,7 +1028,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T10:18:04+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T11:18:04+08:00">
                 2017-05-11
               </time>
             
@@ -1030,7 +1191,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-10T17:53:03+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-10T18:53:03+08:00">
                 2017-05-10
               </time>
             
@@ -1195,7 +1356,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-05T15:36:47+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-05T16:36:47+08:00">
                 2017-05-05
               </time>
             
@@ -1336,7 +1497,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T12:52:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T13:52:00+08:00">
                 2017-04-26
               </time>
             
@@ -1509,7 +1670,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:09:57+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T12:09:57+08:00">
                 2017-04-25
               </time>
             
@@ -1666,7 +1827,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-30T16:47:01+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-30T17:47:01+08:00">
                 2017-03-30
               </time>
             
@@ -1780,165 +1941,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="wangsen.website/posts/9416/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王森">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder森">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/posts/9416/" itemprop="url">
-                  Swift函数与闭包的应用实例
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T17:34:49+08:00">
-                2017-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/posts/9416/" class="leancloud_visitors" data-flag-title="Swift函数与闭包的应用实例">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <hr>
-<div class="clear"></div><br>            <div id="cnblogs_post_body"><p>　　今天的博客算是比较基础的，还是那句话，基础这东西在什么时候都是最重要的。说到函数，只要是写过程序就肯定知道函数是怎么回事，今天就来讨论一下Swift中的函数的特性以及Swift中的闭包。今天的一些小实例中回类比一下Objective-C中的函数的写法等等。Swift中的函数还是有许多好用的特性的，比如输入参数，使用元组返回多个值， 定义形参名，设定默认参数以及可变参数等等一些好用的特性。而在Swift中的闭包就是Objective-C中的Block, 除了语法不通外，两者的用法是一样的。废话少说，开始今天的主题，先搞一搞Swift中的函数，然后在搞一搞Swift中的闭包。</p><br><p><span style="color: #008000; font-size: 18px;">　　一.Swift中的函数</span></p><br><p>　　　　1. 函数的定义与使用</p><br><p>　　　　　在介绍Swift中的函数之前，我想用Objective-C中的一个简单的加法函数来作为引子，然后类比着实现一下Swift中相同功能的函数。关于函数定义就比较简单了，就是一些语法的东西，下面的代码片段是Objc中求两个整数之和的函数，并返回两个数的和。</p><br><div class="cnblogs_code"><br><pre>-<span style="color: #000000;"> (NSInteger)sumNumber1:(NSInteger) number1<br>                number2:(NSInteger) number2 {<br>    </span><span style="color: #0000ff;">return</span> number1 +<span style="color: #000000;"> number2;<br>}</span></pre><br></div><br><p>　　　　函数的功能比较简单了，就是把两个整数传进来，然后返回两个整数的和。接下来将用Swift语言实现，也好通过这个实例来熟悉一下Swift语言中定义函数的语法。下方是Swift语言中求两个整数之和的函数。语法比较简单了，在Swift中定义函数，我们会使用到关键字<span style="color: #ff6600;">func</span>来声明函数。</p><br><div class="cnblogs_code"><br><pre><span style="color: #008080;">1</span> <span style="color: #008000;">//</span><span style="color: #008000;">函数定义</span><br><span style="color: #008080;">2</span> func sum (number1:Int, number2:Int) -&gt;<span style="color: #000000;"> Int{<br></span><span style="color: #008080;">3</span>     <span style="color: #0000ff;">return</span> number1 +<span style="color: #000000;"> number2;<br></span><span style="color: #008080;">4</span> }</pre><br></div><br><p>　　　　用文字来描述Swift定义基本函数的语法就是:<span style="color: #ff6600;"> func <span style="color: #008000;">函数名</span> （形参<span style="color: #008000;">列表</span>） -&gt; <span style="color: #008000;">返回值类型</span> { <span style="color: #008000;">函数体</span>}，<span style="color: #000000;">这样你就可以定义一个函数了。当然，函数定义时还有好多其他的用法，下面会详细介绍。上面函数的调用方法如下：</span></span></p><br><div class="cnblogs_code"><br><pre><span style="color: #008080;">1</span> let sumTwoNubmer = sum(<span style="color: #800080;">2</span>, number2: <span style="color: #800080;">3</span>);</pre><br></div><br><p>&nbsp;</p><br><p>　　　　2. 函数中的形参列表</p><br><p>　　　　关于函数中的形参列表还是有必要提上一嘴的，因为形参列表作为函数数据源之一，所以把参数列表好好的搞一搞还是很有必要的。参数列表也有很多好用的使用方式，接下来详细的介绍一下函数的形参列表。</p><br><p>　　　　(1) 默认的形参是常量（let）</p><br><p>　　　　　　在函数的形参列表中，默认的形参是常量。也就是相当于用<span style="color: #ff6600;">let</span>关键字对形参进行修饰了。我们可以做个试验，把上面加法函数做一个修改，在加法函数中对number1进行加1操作，你会得到一个错误，这个错误的大体意思就是&ldquo;number1是不可被修改的，因为它是let类型的常量&rdquo;。并且编译器还给人出了Fix-it（修复）的方案，就是在number1前面使用<span style="color: #ff6600;">var</span>关键字进行修饰，使其成为变量，这样才可以修改其值。</p><br><p>　　　　　　上面说这么多，一句话：形参默认是常量，如果你想让其是变量，那么你可以使用var关键字进行修饰，这样被关键字var修饰的变量在函数中就可以被修改。下方就是报的这个错误，和编译器提供的解决方案。（在Objc中默认可以在函数中改变形参的值）</p><br><p><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images2015.cnblogs.com/blog/545446/201511/545446-20151116135154655-201247640.png" alt="" width="647" height="91" /></p><br><p>&nbsp;</p><br><p>　　　　（2）给形参命名</p><br><p>　　　　　　为了代码的可读性和可维护性，我们在定义函数时，需要为每个参数名一个名字，这样调用者见名知意，很容易就知道这个参数代表什么意思了。接下来还是在上述加法函数中进行修改，为每个参数名一个名字，并看一下调用方式。修改上面的函数，给第一个形参命名成numberOne, 第二个形参为numberTwo, 下方是修改后的函数。 紧接着sum()函数的调用方式也会有所改变，在调用函数时编译器会给出参数的名称，这样调用者一目了然。</p><br><div class="cnblogs_code"><br><pre><span style="color: #008080;">1</span> <span style="color: #008000;">//</span><span style="color: #008000;">函数定义</span><br><span style="color: #008080;">2</span> func sum (numberOne number1:Int, numberTwo number2:Int) -&gt;<span style="color: #000000;"> Int{<br></span><span style="color: #008080;">3</span>     <span style="color: #0000ff;">return</span> number1 +<span style="color: #000000;"> number2;<br></span><span style="color: #008080;">4</span> <span style="color: #000000;">}<br></span><span style="color: #008080;">5</span><br><span style="color: #008080;">6</span> let sumTwoNubmer = sum(numberOne: <span style="color: #800080;">10</span>, numberTwo: <span style="color: #800080;">20</span>);</pre><br></div><br><p>　　　　 &nbsp;调用上述函数时，下方是编译器给出的提示，一目了然呢。<br /><img style="display: block; margin-left: auto; margin-right: auto;" src="http://images2015.cnblogs.com/blog/545446/201511/545446-20151116141632358-1326285688.png" alt="" width="401" height="119" /></p><br><p>　　　　　关于Swift中参数名的内容，要说明的是在Swift1.0的时候，你可以在参数前面添加上#号，然后参数名就与变量（或者常量）的名字相同，而Swift2.0后这个东西去掉了，因为默认就相当于Swift1.0中添加#号。</p><br><p>&nbsp;</p><br><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/9416/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1988,7 +1990,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2071,8 +2073,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -324,6 +324,302 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="wangsen.website/posts/4627/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王森">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder森">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/posts/4627/" itemprop="url">
+                  python之HTMLParser解析HTML文档
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-26T12:01:54+08:00">
+                2017-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/4627/" class="leancloud_visitors" data-flag-title="python之HTMLParser解析HTML文档">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>###python之HTMLParser解析HTML文档</p>
+<p>HTMLParser是Python自带的模块，使用简单，能够很容易的实现HTML文件的分析。<br>本文主要简单讲一下HTMLParser的用法. </p>
+<p>使用时需要定义一个从类HTMLParser继承的类，重定义函数：</p>
+<ul>
+<li>handle_starttag( tag, attrs)</li>
+<li>handle_startendtag( tag, attrs)</li>
+<li>handle_endtag( tag)</li>
+<li>handle_data(data)</li>
+</ul>
+<h3 id="1-获取标签属性"><a href="#1-获取标签属性" class="headerlink" title="1. 获取标签属性"></a>1. 获取标签属性</h3><p>tag是的html标签，attrs是 (属性，值)元组(tuple)的列表(list). </p>
+<p>如一个标签为：<input type="hidden" name="NXX" id="IDXX" value="VXX" /></p>
+<p>那么它的attrs列表为[(‘type’, ‘hidden’), (‘name’, ‘NXX’), (‘id’, ‘IDXX’), (‘value’, ‘VXX’)]<br>HTMLParser自动将tag和attrs都转为小写。</p>
+<p>下面给出的例子抽取了html中的所有链接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> HTMLParser <span class="keyword">import</span> HTMLParser</div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyHTMLParser</span><span class="params">(HTMLParser)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        HTMLParser.__init__(self)</div><div class="line">        self.links = []</div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle_starttag</span><span class="params">(self, tag, attrs)</span>:</span></div><div class="line">        <span class="comment">#print "Encountered the beginning of a %s tag" % tag</span></div><div class="line">        <span class="keyword">if</span> tag == <span class="string">"a"</span>:</div><div class="line">            <span class="keyword">if</span> len(attrs) == <span class="number">0</span>: <span class="keyword">pass</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">for</span> (variable, value)  <span class="keyword">in</span> attrs:</div><div class="line">                    <span class="keyword">if</span> variable == <span class="string">"href"</span>:</div><div class="line">                        self.links.append(value)</div><div class="line">  </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    html_code = <span class="string">"""</div><div class="line">    &lt;a href="www.google.com"&gt; google.com&lt;/a&gt;</div><div class="line">    &lt;A Href="www.pythonclub.org"&gt; PythonClub &lt;/a&gt;</div><div class="line">    &lt;A HREF = "www.sina.com.cn"&gt; Sina &lt;/a&gt;</div><div class="line">    """</span></div><div class="line">    hp = MyHTMLParser()</div><div class="line">    hp.feed(html_code)</div><div class="line">    hp.close()</div><div class="line">    print(hp.links)</div></pre></td></tr></table></figure>
+<p>输出为：</p>
+<blockquote>
+<p>[‘www.google.com’, ‘www.pythonclub.org’, ‘www.sina.com.cn’]</p>
+</blockquote>
+<p>如果想抽取图形链接：<br><code>&lt;img src=&#39;http://www.google.com/intl/zh-CN_ALL/images/logo.gif&#39; /&gt;</code><br>就要重定义 handle_startendtag( tag, attrs) 函数<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/4627/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="wangsen.website/posts/10604/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王森">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder森">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/posts/10604/" itemprop="url">
+                  系统性学习Moya+Alamofire+RxSwift+ObjectMapper的配合使用
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-07T19:01:49+08:00">
+                2017-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/10604/" class="leancloud_visitors" data-flag-title="系统性学习Moya+Alamofire+RxSwift+ObjectMapper的配合使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>系统性学习Moya+Alamofire+RxSwift+ObjectMapper的配合使用</p>
+<p>主要是练习Moya的熟练使用，全文涉及到CYLTabBarController搭建简单易用的框架、Swift和OC互相调用、FLEX显示界面层级UI的属性、ObjectMapper解析数据、Kingfisher加载网络图片、MBProgressHUD融合到请求里自动显示与隐藏请求等待、MJRefresh作为刷新简单写了一个类别、SDCycleScrollView显示轮播图、Then的使用,最终实现了一个简单的界面…更加深入技术还在探究中，先放上本文的<a href="https://github.com/ws1227/swiftLearn">Demo</a><br><img src="http://art13.photozou.jp/pub/534/3167534/photo/249126056_624.v1499417867.png" alt="示例图片"></p>
+<p>既然是介绍Moya的就主要先来介绍它吧，Moya是对 Alamofire的进一步封装,简化了网络请求,方便维护<br>,方便单元测试,使用Moya项目中网络请求类的部分可能长<a href="https://github.com/ws1227/swiftLearn/blob/master/Tool/ApiManager.swift">这样</a>，所有的请求集中放在一起，集体化管理很方便</p>
+<p><a href="https://github.com/Moya/Moya/tree/master/docs">点击查看官方教程</a></p>
+<h4 id="Moya发送简单的网络请求"><a href="#Moya发送简单的网络请求" class="headerlink" title="Moya发送简单的网络请求"></a>Moya发送简单的网络请求</h4><p>枚举类型需满足TargetType协议</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public protocol TargetType &#123;</div><div class="line">var baseURL: NSURL &#123; get &#125;</div><div class="line">var path: String &#123; get &#125;</div><div class="line">var method: Moya.Method &#123; get &#125;</div><div class="line">var parameters: [String: AnyObject]? &#123; get &#125;</div><div class="line">var sampleData: NSData &#123; get &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实现一个枚举代码如下：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/10604/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="wangsen.website/posts/46398/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1621,336 +1917,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="wangsen.website/posts/28111/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王森">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder森">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/posts/28111/" itemprop="url">
-                  ios9设置通用链接
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T13:52:00+08:00">
-                2017-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OC/" itemprop="url" rel="index">
-                    <span itemprop="name">OC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/posts/28111/" class="leancloud_visitors" data-flag-title="ios9设置通用链接">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h5 id="什么是通用链接？"><a href="#什么是通用链接？" class="headerlink" title="什么是通用链接？"></a>什么是通用链接？</h5><p>通过唯一的网址, 就可以链接一个特定的视图到你的 APP 里面, 不需要特别的 schema<br>通用链接是一种能够方便的通过传统 HTTP 链接来启动 APP, 使 用相同的网址打开网站和 APP。当你的应用支持通用链接，iOS9 之后 , 用户可以点击一个链接跳转到你的网站,并获得无缝重定向到您安装的应用程序,而无需通过 Safari 浏览器。如果你的应用不支持的话,点击链接将会用 Safari 来打开。。试想一下 Twitter 使用了通用链接, 那么你每在 twitter.com 点击一个链接, 你的 iOS 设备都会在 Twitter 里面自动打开这个页面, 而不是当你没有安装时转到普通的网页。这个用户体验是顺畅的, 最重要的是用户不会失去上下文（跳到 APP 后 Safari 上不再留下空标签）。</p>
-<h5 id="通用链接的优点"><a href="#通用链接的优点" class="headerlink" title="通用链接的优点"></a>通用链接的优点</h5><p>通用链接比自定义的URL链接有几处尤为突出的好处,具体来说,通用链接<br>独特性：与自定义的URL链接相比,通用链接不能被其他的应用程序所访问,因为</p>
-<p> 1:它们使用的是标准的HTTP 或 HTTPS 链接到你的网站。<br>安全性：当用户安装应用程序,iOS会检查您已经上传到web服务器文件,以确</p>
-<p> 2:保您的网站允许你的应用程序能打开代表它的URL 文件,只要你创建并且上传该文件,那么你的应用和服务器之间的关联是安全的。灵活性：当你的应用程序没有被安装的时候,通用链接照样能够工作。 </p>
-<p> 3:当用户没有<br>安装你的应用程序,点击该链接,将会以用户所期望的以Safari的形式访问。<br>简单性：通用链接既能支持你的网站,又能支持你的应用<br>私有性：其他的应用程序能和你的应用程序通信,不管你的应用是否被安装。</p>
-<h5 id="准备使用通用链接"><a href="#准备使用通用链接" class="headerlink" title="准备使用通用链接"></a>准备使用通用链接</h5><p>实现通用链接不难, 但首先必须遵守一些先决条件。如下：</p>
-<p>有一个注册的域名</p>
-<p>通过 SSL 访问域名</p>
-<p>支持上传一个 JSON 文件到你的域名</p>
-<p>至少 iOS 9 beta 2 版本 [下载]，这很重要,<br>因为如果是之前的测试版本你需要做额外的操作。</p>
-<p>至少 Xcode 7 beta 2<br>如果你都有了, 那就来按照下面3个步骤来做吧。</p>
-<h6 id="1-开启-Associated-Domains-域"><a href="#1-开启-Associated-Domains-域" class="headerlink" title="1.开启 Associated Domains 域:"></a>1.开启 Associated Domains 域:</h6><p>  进入苹果Apple Developer — Member Center - Certificates, Identifiers &amp; Profiles – Identifiers - App IDs –Edit 然后开启打钩 Associated Domains 后保存。<br><img src="http://s5.51cto.com/wyfs02/M00/79/8D/wKioL1aUntixyjoQAACkJBawYLA561.png" alt="image description"></p>
-<h6 id="2-添加域名到-Capabilities"><a href="#2-添加域名到-Capabilities" class="headerlink" title="2.添加域名到 Capabilities"></a>2.添加域名到 Capabilities</h6><p>首先, 你必须在 Xcode 的 capabilities 里 添加你的 APP 域名, 必须用 applinks: 前置它：还添加一些你可能拥有的子域和扩展（www.domain.com, news.domain.com 等等）。</p>
-<p><img src="http://cc.cocimg.com/api/uploads/20150902/1441166240882211.png" alt="用 applinks: 前缀添加所有域名, 同时不要忘了包含所有可能需要的子域名"></p>
-<p>用applinks: 前缀添加所有域名, 同时不要忘了包含所有可能需要的子域名</p>
-<p>这将使你的 APP 从你的域名请求一个特殊的 JSON 文件 apple-app-site-association。当你第一次启动 APP，它会从 <a href="https://domain.com/apple-app-site-association">https://domain.com/apple-app-site-association</a> 下载这个文件。跳到下个步骤来了解如何构建这个文件。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/28111/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="wangsen.website/posts/16299/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王森">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder森">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/posts/16299/" itemprop="url">
-                  解决xcode8.2控制台数据打印不全
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T12:09:57+08:00">
-                2017-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Xcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Xcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/posts/16299/" class="leancloud_visitors" data-flag-title="解决xcode8.2控制台数据打印不全">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近升级Xcode8，开发工具出现了，控制台log数据不完整，经常打印一半，就没有了，经过查询一番终于找到了解决办法!</p>
-<p>解决办法：宏定义去log日志数据，把NSlog换成print</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#ifdef DEBUG</div><div class="line"></div><div class="line">#define DLog( s, ... ) printf(&quot;class: &lt;%p %s:(%d) &gt; method: %s \n%s\n&quot;, self, [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __PRETTY_FUNCTION__, [[NSString stringWithFormat:(s), ##__VA_ARGS__] UTF8String] )</div><div class="line"></div><div class="line">#else</div><div class="line"></div><div class="line">#define DLog( s, ... )</div><div class="line"></div><div class="line">#endif</div></pre></td></tr></table></figure>
-<p> 日了狗了 让我纠结半天 ，心想xcode不会出现这么低级的问题吧，没想查了一下还真有这个问题，事实证明‘实践是证明真理的唯一标准’啊。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2000,7 +1966,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2022,7 +1988,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

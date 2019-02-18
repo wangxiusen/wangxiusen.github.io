@@ -407,15 +407,15 @@
 
       
         <p>今天学习swift的UICollectionView时候项目运行就报错，控制台显示<br>“UICollectionView must be initialized with a non-nil layout parameter”，意思很明显就是UICollectionView初始化时候没有给个有效的layout，就是说UICollectionViewFlowLayout没有初始化，我就纳闷了明明是初始化了啊</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">全局变量</div><div class="line"> private  var layout = UICollectionViewFlowLayout()</div><div class="line"> private  var collectionView :UICollectionView()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">全局变量</span><br><span class="line"> private  var layout = UICollectionViewFlowLayout()</span><br><span class="line"> private  var collectionView :UICollectionView()</span><br></pre></td></tr></table></figure>
 <p>然后在viewDidLoad里</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)</span><br></pre></td></tr></table></figure>
 <p>看起来没什么问题，才初学swift不知道</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private  var collectionView :UICollectionView()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private  var collectionView :UICollectionView()</span><br></pre></td></tr></table></figure>
 <p>这样写已经是初始化了，所以就报错了，应该在声明变量的时候改为如下写法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private    var collectionView :UICollectionView!</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private    var collectionView :UICollectionView!</span><br></pre></td></tr></table></figure>
 <p>这样就就只是声明变量了再在viewDidLoad里初始化使用就没问题了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> layout = UICollectionViewFlowLayout()</div><div class="line">collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> layout = UICollectionViewFlowLayout()</span><br><span class="line">collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -556,7 +556,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

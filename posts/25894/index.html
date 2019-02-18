@@ -414,9 +414,9 @@
 <p>今天在使用DZNEmptyDataSet遇到了一个问题，就是我用MJRefresh 后DZNEmptyDataSet View的整个背景尺寸不对。<br><br>ps: DZNEmptyDataSet是一个相当不错设置空白页面的轮子非常 好使 。</p>
 </blockquote>
 <p>无论是用自定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView</span><br></pre></td></tr></table></figure>
 <p>还是直接用 DZNEmptyDataSet 推荐的方式直接设置都是有问题的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView;</div><div class="line">- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView</div><div class="line">- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView;</span><br><span class="line">- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView</span><br><span class="line">- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>看看问题的具体表现吧</p>
 </blockquote>
@@ -426,19 +426,19 @@
 </blockquote>
 <p><img src="http://art5.photozou.jp/pub/534/3167534/photo/249087171_624.v1499234903.png" alt="非正常图片"></p>
 <p>简单的说问题是：刷新后DZNEmptyDataSetView 还会向上偏移一段距离！<br><br>尝试各种刷新都没有用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[self.tableView reloadEmptyDataSet];  </div><div class="line">[self.tableView reloadData];</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[self.tableView reloadEmptyDataSet];  </span><br><span class="line">[self.tableView reloadData];</span><br></pre></td></tr></table></figure>
 <p>看了下视图的层次关系<br><br><img src="http://art5.photozou.jp/pub/534/3167534/photo/249087178_624.v1499234916.jpg" alt="层次关系图"><br>可以看出了DZNEmptyDataSetView上移了54，然后我一搜 54 ，发现54出现地方并不多，结合刷新猜测应该就是它啦</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const CGFloat MJRefreshHeaderHeight = 54.0;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const CGFloat MJRefreshHeaderHeight = 54.0;</span><br></pre></td></tr></table></figure>
 <p>所以推测，DZNEmptyDataSetView是根据正在刷新的过程中给其定布局的。然而我们需要阻止它或延后它。</p>
 <blockquote>
 <p>此处我是想着在这之后直接处理它,改变它的 origin。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for (UIView *subView in self.tableView.subviews) &#123;</div><div class="line">if ([NSStringFromClass([subView class]) isEqualToString:@&quot;DZNEmptyDataSetView&quot;])&#123;</div><div class="line">if (subView.frame.origin.y == 0) return;</div><div class="line">subView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (UIView *subView in self.tableView.subviews) &#123;</span><br><span class="line">if ([NSStringFromClass([subView class]) isEqualToString:@&quot;DZNEmptyDataSetView&quot;])&#123;</span><br><span class="line">if (subView.frame.origin.y == 0) return;</span><br><span class="line">subView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>在刷新后这样处理，方法有点死，但是相对来说比较直接的。</p>
 </blockquote>
 <p>从 github 上看到的方法如下，貌似是目前使用最合理的吧，有其他方法欢迎告知。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView &#123;</div><div class="line">scrollView.contentOffset = CGPointZero;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView &#123;</span><br><span class="line">scrollView.contentOffset = CGPointZero;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -573,7 +573,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

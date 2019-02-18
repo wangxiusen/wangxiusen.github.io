@@ -6,19 +6,19 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
-  <meta name="google-site-verification" content="F_pmJOje5pcXixoVap4Vk7vlUPHG5UbaU4Hzn_uhgck" />
+  <meta name="google-site-verification" content="F_pmJOje5pcXixoVap4Vk7vlUPHG5UbaU4Hzn_uhgck">
 
 
 
@@ -34,7 +34,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -68,21 +68,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="iOS," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="iOS,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
 
 
 
@@ -90,13 +90,15 @@
 
 
 <meta name="description" content="本文主要介绍IGListKit的Objective-C的用法，目前GitHub上的Demo和文档都是Swift版本的，介于我们开发语言是Objective-C所以我也查了网上相关的一些篇幅介绍IGListKit的使用但都已经是过时的版本了（Swift不是很熟练所以有部分Swift代码还不能顺利翻译为OC）,特别说明的是熟练于OC和Swift开发的应该看着官方的Demo就能直接写出OC版本了，这里主">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IGListKit介绍简单使用">
 <meta property="og:url" content="wangsen.website/posts/31852/index.html">
 <meta property="og:site_name" content="Coder森">
 <meta property="og:description" content="本文主要介绍IGListKit的Objective-C的用法，目前GitHub上的Demo和文档都是Swift版本的，介于我们开发语言是Objective-C所以我也查了网上相关的一些篇幅介绍IGListKit的使用但都已经是过时的版本了（Swift不是很熟练所以有部分Swift代码还不能顺利翻译为OC）,特别说明的是熟练于OC和Swift开发的应该看着官方的Demo就能直接写出OC版本了，这里主">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1ft881f64z2j30k208p75d.jpg">
-<meta property="og:updated_time" content="2018-07-13T09:05:23.242Z">
+<meta property="og:updated_time" content="2018-07-13T09:07:42.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IGListKit介绍简单使用">
 <meta name="twitter:description" content="本文主要介绍IGListKit的Objective-C的用法，目前GitHub上的Demo和文档都是Swift版本的，介于我们开发语言是Objective-C所以我也查了网上相关的一些篇幅介绍IGListKit的使用但都已经是过时的版本了（Swift不是很熟练所以有部分Swift代码还不能顺利翻译为OC）,特别说明的是熟练于OC和Swift开发的应该看着官方的Demo就能直接写出OC版本了，这里主">
@@ -128,7 +130,7 @@
 
 
 
-  <link rel="canonical" href="wangsen.website/posts/31852/"/>
+  <link rel="canonical" href="wangsen.website/posts/31852/">
 
 
 
@@ -196,7 +198,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Coder森</span>
         <span class="logo-line-after"><i></i></span>
@@ -226,7 +228,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -236,7 +238,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -246,7 +248,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -256,7 +258,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -269,7 +271,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -290,9 +292,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocapitalize="off" autocomplete="off" autocorrect="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -329,7 +329,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王森">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/uploads/avatar.jpg">
     </span>
 
@@ -424,9 +424,8 @@
 <h3 id="IGListKit应用"><a href="#IGListKit应用" class="headerlink" title="IGListKit应用"></a>IGListKit应用</h3><p>使用IGListKit后UICollectionView的协议UICollectionDataSource和UICollectionViewDelegate不用再使用，取而代之的是SectionController来实现对应的方法，由IGListAdapter把UICollectionView绑定在一起。</p>
 <h6 id="IGListAdapter的初始化"><a href="#IGListAdapter的初始化" class="headerlink" title="IGListAdapter的初始化"></a>IGListAdapter的初始化</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">self.collectionView=[[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:[[UICollectionViewFlowLayout alloc]init]];</div><div class="line">   self.collectionView.backgroundColor=[UIColor whiteColor];</div><div class="line">   IGListAdapterUpdater*updater=[[IGListAdapterUpdater alloc]init];</div><div class="line">   </div><div class="line">   _adapter=[[IGListAdapter alloc]initWithUpdater:updater viewController:self workingRangeSize:0];</div><div class="line">   </div><div class="line">   _adapter.collectionView=self.collectionView;</div><div class="line">   </div><div class="line">   _adapter.dataSource=self;</div><div class="line">   </div><div class="line">   [self.view addSubview:self.collectionView];</div></pre></td></tr></table></figure>
 <h6 id="IGListAdapter的协议"><a href="#IGListAdapter的协议" class="headerlink" title="IGListAdapter的协议"></a>IGListAdapter的协议</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">- (nullable UIView *)emptyViewForListAdapter:(nonnull IGListAdapter *)listAdapter &#123;</div><div class="line"> //没有数据时候的View</div><div class="line">    UILabel *label=[UILabel new];</div><div class="line">    label.text=@&quot;没有数据&quot;;</div><div class="line">    label.textAlignment=NSTextAlignmentCenter;</div><div class="line">    return label;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (nonnull IGListSectionController *)listAdapter:(nonnull IGListAdapter *)listAdapter sectionControllerForObject:(nonnull id)object &#123;</div><div class="line">    </div><div class="line">    DemoSectionController *section=[[DemoSectionController alloc]init];</div><div class="line">   </div><div class="line">    return section;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (nonnull NSArray&lt;id&lt;IGListDiffable&gt;&gt; *)objectsForListAdapter:(nonnull IGListAdapter *)listAdapter &#123;</div><div class="line">    //数据源</div><div class="line">    return  self.dataArray;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h6 id="IGListSectionController的方法"><a href="#IGListSectionController的方法" class="headerlink" title="IGListSectionController的方法"></a>IGListSectionController的方法</h6><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">- (NSInteger)numberOfItems&#123;</div><div class="line">    </div><div class="line">   //每个section返回多少行根据数据来写 一般可能就是1</div><div class="line">    return 3;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGSize)sizeForItemAtIndex:(NSInteger)index&#123;</div><div class="line">    </div><div class="line">    return  CGSizeMake(self.collectionContext.containerSize.width, 46);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">-(UICollectionViewCell *)cellForItemAtIndex:(NSInteger)index&#123;</div><div class="line">    </div><div class="line">    DemoCollectionViewCell*cell=[self.collectionContext dequeueReusableCellOfClass:[DemoCollectionViewCell class] forSectionController:self atIndex:index];</div><div class="line">    [cell setModel:_object row:index];</div><div class="line">    return cell;</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (void)didSelectItemAtIndex:(NSInteger)index &#123;</div><div class="line">    </div><div class="line">    NSLog(@&quot;点击Section%ld  row%ld&quot;,(long)self.section,(long)index);</div><div class="line">&#125;</div><div class="line">- (void)didUpdateToObject:(id)object&#123;</div><div class="line">    //数据传输到这里</div><div class="line">    _object =(DemoModel *)object;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h6 id="IGListKit结构"><a href="#IGListKit结构" class="headerlink" title="IGListKit结构"></a>IGListKit结构</h6><p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1ft881f64z2j30k208p75d.jpg" alt=""></p>
+<h6 id="IGListSectionController的方法"><a href="#IGListSectionController的方法" class="headerlink" title="IGListSectionController的方法"></a>IGListSectionController的方法</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">- (NSInteger)numberOfItems&#123;</div><div class="line">    </div><div class="line">   //每个section返回多少行根据数据来写 一般可能就是1</div><div class="line">    return 3;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGSize)sizeForItemAtIndex:(NSInteger)index&#123;</div><div class="line">    </div><div class="line">    return  CGSizeMake(self.collectionContext.containerSize.width, 46);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">-(UICollectionViewCell *)cellForItemAtIndex:(NSInteger)index&#123;</div><div class="line">    </div><div class="line">    DemoCollectionViewCell*cell=[self.collectionContext dequeueReusableCellOfClass:[DemoCollectionViewCell class] forSectionController:self atIndex:index];</div><div class="line">    [cell setModel:_object row:index];</div><div class="line">    return cell;</div><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div><div class="line">- (void)didSelectItemAtIndex:(NSInteger)index &#123;</div><div class="line">    </div><div class="line">    NSLog(@&quot;点击Section%ld  row%ld&quot;,(long)self.section,(long)index);</div><div class="line">&#125;</div><div class="line">- (void)didUpdateToObject:(id)object&#123;</div><div class="line">    //数据传输到这里</div><div class="line">    _object =(DemoModel *)object;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="IGListKit结构"><a href="#IGListKit结构" class="headerlink" title="IGListKit结构"></a>IGListKit结构</h6><p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1ft881f64z2j30k208p75d.jpg" alt></p>
 <h3 id="IGListDiffable-and-Equality"><a href="#IGListDiffable-and-Equality" class="headerlink" title="IGListDiffable and Equality"></a>IGListDiffable and Equality</h3><p>IGListDiffable使用的是Paul Heckel 的A technique for isolating differences between files 的算法，简单来说这个算法就是计算collectionView前后数据变化增删改移关系的一个算法，算是IGListKit的特色特点之一 。</p>
 <p>实现差异比较需要自定义model遵守IGListDiffable协议并实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (nonnull id&lt;NSObject&gt;)diffIdentifier &#123;</div><div class="line">    return self;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (BOOL)isEqualToDiffableObject:(nullable id&lt;IGListDiffable&gt;)object &#123;</div><div class="line">    if (self == object) &#123;</div><div class="line">        return YES;</div><div class="line">    &#125; else if (self == nil || object == nil) &#123;</div><div class="line">        return NO;</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
@@ -481,6 +480,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/posts/35916/" rel="prev" title="浅谈第三方 SDK 和自定义 crash 上报冲突问题">
+                浅谈第三方 SDK 和自定义 crash 上报冲突问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -508,7 +511,7 @@
   <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
   <a class="jiathis_counter_style"></a>
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
   var jiathis_config={
     hideMore:false
   }
@@ -552,7 +555,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -563,9 +566,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/avatar.jpg"
-               alt="王森" />
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="王森">
           <p class="site-author-name" itemprop="name">王森</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
@@ -576,7 +577,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -653,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#IGListKit的介绍"><span class="nav-number">1.</span> <span class="nav-text">IGListKit的介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IGListKit-优势"><span class="nav-number">2.</span> <span class="nav-text">IGListKit 优势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IGListKit应用"><span class="nav-number"></span> <span class="nav-text">IGListKit应用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListAdapter的初始化"><span class="nav-number">0.0.1.</span> <span class="nav-text">IGListAdapter的初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListAdapter的协议"><span class="nav-number">0.0.2.</span> <span class="nav-text">IGListAdapter的协议</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListSectionController的方法"><span class="nav-number">0.0.3.</span> <span class="nav-text">IGListSectionController的方法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListKit结构"><span class="nav-number">0.0.4.</span> <span class="nav-text">IGListKit结构</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IGListDiffable-and-Equality"><span class="nav-number"></span> <span class="nav-text">IGListDiffable and Equality</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#IGListKit的介绍"><span class="nav-number">1.</span> <span class="nav-text">IGListKit的介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IGListKit-优势"><span class="nav-number">2.</span> <span class="nav-text">IGListKit 优势</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#IGListKit应用"><span class="nav-number"></span> <span class="nav-text">IGListKit应用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListAdapter的初始化"><span class="nav-number">0.0.1.</span> <span class="nav-text">IGListAdapter的初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListAdapter的协议"><span class="nav-number">0.0.2.</span> <span class="nav-text">IGListAdapter的协议</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListSectionController的方法"><span class="nav-number">0.0.3.</span> <span class="nav-text">IGListSectionController的方法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IGListKit结构"><span class="nav-number">0.0.4.</span> <span class="nav-text">IGListKit结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IGListDiffable-and-Equality"><span class="nav-number"></span> <span class="nav-text">IGListDiffable and Equality</span></a></li></div>
             
 
           </div>
@@ -673,10 +674,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
